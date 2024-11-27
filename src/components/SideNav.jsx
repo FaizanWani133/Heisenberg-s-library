@@ -15,6 +15,8 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
+import { Avatar } from "@mui/material";
+import { useAuth } from "../provider/AuthContext";
 
 const drawerWidth = 240;
 
@@ -40,6 +42,7 @@ const drawersList = [
 export default function SideNav() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
   return (
     <Box display={"flex"}>
       <CssBaseline />
@@ -56,9 +59,9 @@ export default function SideNav() {
         }}
       >
         <Toolbar />
-        <Box>
-          <List>
-            {drawersList.map((item, index) => (
+        <Box sx={{ height: "100%" }}>
+          <List sx={{ height: "100%" }}>
+            {drawersList.map((item) => (
               <ListItem key={item.name} disablePadding>
                 <ListItemButton
                   selected={item.path === location?.pathname}
@@ -72,6 +75,19 @@ export default function SideNav() {
                 </ListItemButton>
               </ListItem>
             ))}
+
+            {/* <ListItem disablePadding sx={{ mt: "auto", mb: 0 }}>
+              <ListItemButton
+                sx={{
+                  background: "primary.main",
+                }}
+              >
+                <ListItemIcon>
+                  <Avatar />
+                </ListItemIcon>
+                <ListItemText primary={user.email} />
+              </ListItemButton>
+            </ListItem> */}
           </List>
         </Box>
       </Drawer>

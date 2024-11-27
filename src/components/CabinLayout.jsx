@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from "react";
-import supabase from "./supabase";
+import { useState, useEffect } from "react";
+import supabase from "../supabase";
 import { Box, Typography } from "@mui/material";
 
-const CabinLayout = ({ hall_id }) => {
+const CabinLayout = ({ hall_id,hall_layout}) => {
   const [layout, setLayout] = useState([]);
   const [cabinsStatus, setCabinsStatus] = useState({});
 
   // The initial layout with cabin IDs
-  const initialLayout = [
-    ["14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"],
-    [null, null, null, null, null, null, null, null, null, null, "25"],
-    ["13", null, "49", "50", "51", "52", "53", "54", null, null, "26"],
-    ["12", null, "48", "47", "46", "45", "44", "43", null, null, "27"],
-    ["11", null, null, null, null, null, null, null, null, null, "28"],
-    ["10", null, "37", "38", "39", "40", "41", "42", null, null, "29"],
-    ["9", null, "36", "35", "34", "33", "32", "31", null, null, "30"],
-    ["8", null, null, null, null, null, null, null, null, null, null],
-    ["7", null, "6", "5", "4", "3", null, "2", "1", null, null],
-  ];
+ 
   const fetchCabins = async () => {
     try {
       let { data, error } = await supabase
@@ -34,7 +24,7 @@ const CabinLayout = ({ hall_id }) => {
         return acc;
       }, {});
       setCabinsStatus(statusData); // Store status data in state
-      setLayout(initialLayout); // You can fetch or hardcode the initial layout
+      setLayout(hall_layout); // You can fetch or hardcode the initial layout
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -119,22 +109,6 @@ const CabinLayout = ({ hall_id }) => {
       ))}
     </Box>
   );
-
-  // Handle cabin selection (toggle status in backend)
-  function handleCabinSelection(cabinId, currentStatus) {
-    // const newStatus = currentStatus === 'available' ? 'occupied' : 'available';
-    // axios.post('http://localhost:5000/api/cabins/update', { cabinId, status: newStatus })
-    //   .then(response => {
-    //     // Update the local status of the cabin in the frontend
-    //     setCabinsStatus(prevState => ({
-    //       ...prevState,
-    //       [cabinId]: newStatus
-    //     }));
-    //   })
-    //   .catch(error => {
-    //     console.error('Error updating cabin status:', error);
-    //   });
-  }
 };
 
 export default CabinLayout;

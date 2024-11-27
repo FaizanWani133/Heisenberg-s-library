@@ -1,13 +1,13 @@
 import { Container } from "@mui/material";
-import React from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useAuth } from "../provider/AuthContext";
 
 const PublicRoutes = () => {
-  const isAuthenticated = true;
+  const {user} = useAuth();
 
-  if (isAuthenticated) {
+  if (user) {
     return <Navigate to={"/admin"} />;
   }
   return (

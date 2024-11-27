@@ -17,7 +17,7 @@ export const router = createBrowserRouter(
         <Route index element={<Home />} />
       </Route>
       <Route path="/admin" element={<ProtectedRoute />}>
-        {/* <Route index element={<Dashboard />} /> */}
+        <Route index element={<Dashboard />} />
         <Route path="/admin/students" element={<Students />}></Route>
         <Route path="/admin/hall" element={<HallManagement />}></Route>
 
