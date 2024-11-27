@@ -1,0 +1,95 @@
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .cabin {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Status styles */
+  .cabin.status-available {
+    background-color: #32c8db; /* Light blue for available */
+  }
+  
+  .cabin.status-occupied {
+    background-color: #4caf50; /* Green for occupied */
+    color: white;
+  }
+  
+  .cabin.status-reserved {
+    background-color: #ff9800; /* Orange for reserved */
+    color: white;
+  }
+  
+  .cabin.empty {
+    background-color: transparent;
+    border: none;
+  }
+
+  /* Set up the grid container */
+.container {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* Left panel 250px, right content takes remaining space */
+    gap: 20px; /* Space between panels and content */
+    height: 100vh; /* Full viewport height */
+    padding: 20px;
+  }
+  
+  /* Styling for the left panel */
+  .panel {
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .panel h3 {
+    margin-top: 0;
+  }
+  
+  .panel ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .panel ul li {
+    padding: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .panel ul li:hover {
+    background-color: #ddd;
+  }
+  
+  /* Styling for the content area */
+  .content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .content h2 {
+    margin-top: 0;
+  }
+  
+  
