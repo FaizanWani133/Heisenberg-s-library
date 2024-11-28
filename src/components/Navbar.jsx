@@ -3,7 +3,7 @@ import { useAuth } from "../provider/AuthContext";
 import AuthModal from "./AuthModal";
 import { useState } from "react";
 
-const Navbar = () => {
+const Navbar = ({children}) => {
   const { user, logout } = useAuth();
   const [showLogin, setShowModal] = useState(false);
 
@@ -16,7 +16,7 @@ const Navbar = () => {
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Toolbar sx={{ gap: "10px", justifyContent: "space-between" }}>
-
+        {children}
         <Typography variant="h5">Hiesenberg's Library</Typography>
         <Stack sx={{ flexDirection: "row", gap: "10px" }}>
           {" "}
