@@ -1,47 +1,17 @@
-import {
-  Box,
-  Button,
-  Pagination,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import DataTable from "../components/StudentsTable";
-import { useNavigate } from "react-router-dom";
-import supabase from "../supabase";
+import { useFetchStudents } from "../api";
+import LoadingSpinner from "../components/LoadingSpinner";
+import AddStudentModal from "../components/AddStudentModal";
+import { useState } from "react";
 
 const Students = () => {
-  const [students, setStudents] = useState([]);
-  const navigation = useNavigate();
+  const { data: students, isLoading } = useFetchStudents();
+  const [addStudent, setAddStudent] = useState(false);
 
-  const handleRowPerPageChange = (page) => {};
-
-  function calculateTotalPages(totalRows, rowsPerPage) {
-    return Math.ceil(totalRows / rowsPerPage);
-  }
-
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        let { data, error } = await supabase
-          .from("student") //
-          .select("*");
-
-        if (error) {
-          throw error;
-        }
-
-        setStudents(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchStudents();
-  }, []);
+  if (isLoading) return <LoadingSpinner />;
   return (
-    <Box>
+    <Box sx={{ height: "100%" }}>
       <Stack spacing={2}>
         <Stack
           direction={"row"}
@@ -58,10 +28,17 @@ const Students = () => {
 
         {/* <TableFilters setFilters={setFilters} value={filters} /> */}
         <Stack justifyContent={"end"} alignItems={"end"}>
-          <Button variant="contained">Add New Student</Button>
+          <Button variant="contained" onClick={() => setAddStudent(true)}>
+            Add New Student
+          </Button>
         </Stack>
         <DataTable students={students} />
       </Stack>
+      <AddStudentModal
+        open={addStudent}
+        handleClose={() => setAddStudent(false)}
+        handleAddStudent={() => setAddStudent(false)}
+      />
     </Box>
   );
 };

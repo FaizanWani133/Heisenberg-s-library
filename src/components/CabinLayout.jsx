@@ -1,53 +1,32 @@
-import { useState, useEffect } from "react";
-import supabase from "../supabase";
+import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
+import { useFetchCabins } from "../api";
+import LoadingSpinner from "./LoadingSpinner";
 
-const CabinLayout = ({ hall_id,hall_layout}) => {
+const CabinLayout = ({ hall_id, hall_layout }) => {
   const [layout, setLayout] = useState([]);
   const [cabinsStatus, setCabinsStatus] = useState({});
+  const { data: cabins ,isLoading} = useFetchCabins(hall_id);
 
   // The initial layout with cabin IDs
- 
-  const fetchCabins = async () => {
-    try {
-      let { data, error } = await supabase
-        .from("cabin") // 'cabins' is the name of the table in your Supabase project
-        .select("*,student(*)")
-        .eq("hall_id", hall_id);
 
-      if (error) {
-        throw error;
-      }
-      console.log({ data });
-      const statusData = data.reduce((acc, cabin) => {
-        acc[cabin.id] = cabin.status;
-        return acc;
-      }, {});
-      setCabinsStatus(statusData); // Store status data in state
-      setLayout(hall_layout); // You can fetch or hardcode the initial layout
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  const updateLayouts = (cabins) => {
+    const statusData = cabins.reduce((acc, cabin) => {
+      acc[cabin.cabin_number] = cabin.status;
+      return acc;
+    }, {});
+    setCabinsStatus(statusData); // Store status data in state
+    setLayout(hall_layout); // You can fetch or hardcode the initial layout
   };
-  // Fetch cabin statuses from the backend
+
   useEffect(() => {
-    if (hall_id) {
-      fetchCabins();
+    if(cabins && cabins.length>0){
+      updateLayouts(cabins);
     }
   }, [hall_id]);
 
-  async function bookCabin(id) {
-    try {
-      const { data, error } = await supabase
-        .from("cabin")
-        .update({ status: "OCCUPIED" })
-        .eq("id", id)
-        .select();
-      await fetchCabins();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+  if(isLoading){
+    return <LoadingSpinner/>
   }
 
   // Render the layout with cabin status

@@ -1,55 +1,88 @@
-import { Box,  Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../provider/AuthContext";
-const Footer = () => {
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const handleNavigation = (url) => {
-    // Use navigate to navigate to a different route
-    navigate(url);
-  };
+import { Box, Typography, Link, Grid, IconButton } from "@mui/material";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
+const Footer = () => {
   return (
     <Box
       sx={{
-        bgcolor: "primary.main",
-        padding: "16px",
-        display: "flex",
-        gap: "20px",
+        backgroundColor: "#2E3B55",
+        color: "#FFFFFF",
+        padding: "40px 20px",
+        marginTop: "auto",
       }}
     >
-      <Box
-        display={"flex"}
-        flexGrow={0.1}
-        flexDirection={"column"}
-        alignItems={"center"}
-        gap={"10px"}
-        justifyContent={"center"}
-      >
-        {/* <img src={require("./../assets/white-logo.png")} width={100} /> */}
-        {/* <GooglePlayButton fullWidth />
-        <AppStoreButton fullWidth /> */}
-        <Box
-          display={"flex"}
-          justifyContent={"space-evenly"}
-          width={"100%"}
-          mt={"auto"}
-          padding={"10px"}
-        >
-          {/* <FaFacebook color="white" size={24} />
-          <FaGoogle color="white" size={24} />
-          <FaApple color="white" size={24} /> */}
-        </Box>
-      </Box>
-      {!user && (
-        <Box flexGrow={1}>
-          <Box textAlign={"center"} color={"white"}>
-            <Typography fontWeight={"bold"}>
-              2023 Hisenbergs Library . All Rights Reserved
-            </Typography>
+      <Grid container spacing={4} justifyContent="center">
+        {/* Navigation Section */}
+        <Grid item xs={12} sm={4}>
+          <Typography variant="h6" gutterBottom>
+            Quick Links
+          </Typography>
+          <Link href="#" color="inherit" underline="hover" display="block">
+            Home
+          </Link>
+          <Link href="#about" color="inherit" underline="hover" display="block">
+            About Us
+          </Link>
+          <Link
+            href="#features"
+            color="inherit"
+            underline="hover"
+            display="block"
+          >
+            Features
+          </Link>
+          <Link
+            href="#contact"
+            color="inherit"
+            underline="hover"
+            display="block"
+          >
+            Contact
+          </Link>
+        </Grid>
+
+        {/* Contact Section */}
+        <Grid item xs={12} sm={4}>
+          <Typography variant="h6" gutterBottom>
+            Contact Us
+          </Typography>
+          <Typography variant="body2">
+            Email: info@heisenbergs-library.com
+          </Typography>
+          <Typography variant="body2">Phone: +91-123-456-7890</Typography>
+          <Typography variant="body2">Address: Srinagar, India</Typography>
+        </Grid>
+
+        {/* Social Media Section */}
+        <Grid item xs={12} sm={4}>
+          <Typography variant="h6" gutterBottom>
+            Follow Us
+          </Typography>
+          <Box>
+            <IconButton href="#" target="_blank" color="inherit">
+              <FacebookIcon />
+            </IconButton>
+            <IconButton href="#" target="_blank" color="inherit">
+              <TwitterIcon />
+            </IconButton>
+            <IconButton href="#" target="_blank" color="inherit">
+              <InstagramIcon />
+            </IconButton>
+            <IconButton href="#" target="_blank" color="inherit">
+              <LinkedInIcon />
+            </IconButton>
           </Box>
-        </Box>
-      )}
+        </Grid>
+      </Grid>
+      <Box mt={4} textAlign="center">
+        <Typography variant="body2" color="inherit">
+          © {new Date().getFullYear()} Heisenberg's Library. All rights
+          reserved.
+        </Typography>
+      </Box>
     </Box>
   );
 };
